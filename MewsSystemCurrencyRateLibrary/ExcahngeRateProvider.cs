@@ -16,6 +16,9 @@ namespace ExchangeRateUpdater
         /// do not return exchange rate "USD/EUR" with value calculated as 1 / "EUR/USD". If the source does not provide
         /// some of the currencies, ignore them.
         /// </summary>
+        /// 
+        string newLine = "\n";
+        char delimeter = '|';
         public IEnumerable<ExchangeRate> GetExchangeRates(IEnumerable<Currency> currencies)
         {
            
@@ -34,11 +37,11 @@ namespace ExchangeRateUpdater
                     webData = reader.ReadToEnd();
                 }
 
-                var currLines = webData.Split(new string[] { "\n" }, StringSplitOptions.None);
+                var currLines = webData.Split(new string[] { newLine }, StringSplitOptions.None);
 
                 for (int i = 2; i < currLines.Length; i++)
                 {
-                    var linecontent = currLines[i].Split('|');
+                    var linecontent = currLines[i].Split(delimeter);
                     if (linecontent.Length != 5)
                     {
                         continue;
